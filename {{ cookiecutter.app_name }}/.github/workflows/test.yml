@@ -1,0 +1,38 @@
+{% raw -%}
+name: Test
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/test.yml"
+      - "**.py"
+  push:
+    paths:
+      - ".github/workflows/test.yml"
+      - "**.py"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version:
+          - "3.8"
+          - "3.9"
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Install Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v5
+        with:
+          python_version: ${{ matrix.python_version }}
+          cache: "pip"
+
+      - name: Run nox "tests" session
+        run: pipx run nox --error-on-missing-interpreters --session tests-${{ matrix.python_version }}
+{% endraw -%}

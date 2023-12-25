@@ -1,0 +1,14 @@
+cookiecutter-python-cli-app-demo
+
+Cookiecutter Python CLI App Demo
+Demo of https://github.com/sgraaf/cookiecutter-python-cli-app.
+
+Steven van de Graaf
+steven@vandegraaf.xyz
+sgraaf
+
+
+
+4
+2
+2

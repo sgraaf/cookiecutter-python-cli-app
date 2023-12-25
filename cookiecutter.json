@@ -1,0 +1,66 @@
+{
+    "app_name": "python-cli-app",
+    "package_name": "{{ cookiecutter.app_name.replace('-', '_').lower() }}",
+    "friendly_name": "{{ cookiecutter.app_name.replace('-', ' ').title() }}",
+    "short_description": "{{ cookiecutter.friendly_name }} is a Python command-line application for ...",
+    "use_rich": [false, true],
+    "author": "",
+    "email": "",
+    "github_username": "",
+    "version": "0.1.0",
+    "copyright_year": "{% now 'utc', '%Y' %}",
+    "license": [
+        "mit",
+        "gpl-3.0",
+        "apache-2.0",
+        "gpl-2.0",
+        "bsd-3-clause",
+        "agpl-3.0",
+        "unlicense"
+    ],
+    "development_status": [
+        "Development Status :: 1 - Planning",
+        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 6 - Mature",
+        "Development Status :: 7 - Inactive"
+    ],
+    "init_git": [true, false],
+    "init_venv": [true, false],
+    "__prompts__": {
+        "app_name": "The name (slug) of your project",
+        "package_name": "The name of your package",
+        "friendly_name": "The friendly name of your project (for use in documentation, etc.)",
+        "short_description": "A short description of your projec",
+        "use_rich": "Use [link=https://github.com/Textualize/rich]Rich[/link] for rich text and beautiful formatting in the terminal",
+        "author": "Your (full) name",
+        "email": "Your e-mail address",
+        "github_username": "Your GitHub username or organization",
+        "version": "The version of your package",
+        "copyright_year": "The copyright year of your package",
+        "license": {
+            "__prompt__": "Choose a license for your package",
+            "mit": "MIT",
+            "gpl-3.0": "GNU General Public License v3.0",
+            "apache-2.0": "Apache license 2.0",
+            "gpl-2.0": "GNU General Public License v2.0",
+            "bsd-3-clause": "BSD 3-clause \"New\" or \"Revised\" license",
+            "agpl-3.0": "GNU Affero General Public License v3.0",
+            "unlicense": "The Unlicense"
+        },
+        "development_status": {
+            "__prompt__": "Choose a development status for your package",
+            "Development Status :: 1 - Planning": "Planning",
+            "Development Status :: 2 - Pre-Alpha": "Pre-Alpha",
+            "Development Status :: 3 - Alpha": "Alpha",
+            "Development Status :: 4 - Beta": "Beta",
+            "Development Status :: 5 - Production/Stable": "Production/Stable",
+            "Development Status :: 6 - Mature": "Mature",
+            "Development Status :: 7 - Inactive": "Inactive"
+        },
+        "init_venv": "Initialize a virtual environment (venv)",
+        "init_git": "Initialize a Git repository"
+    }
+}

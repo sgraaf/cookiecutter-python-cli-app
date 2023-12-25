@@ -1,0 +1,15 @@
+[tool.ruff]
+select = ["ALL"]
+ignore = [
+    "E501",  # line too long, handled by black
+    "COM",  # flake8-commas, handled by black
+    "CPY",  # flake8-copyright
+    "ISC001",  # single-line-implicit-string-concatenation
+    "INP",  # flake8-no-pep420
+    "D",  # pydocstyle
+    "PLR0133",  # comparison-of-constant
+    "S603",  # subprocess-without-shell-equals-true
+    "S607",  # start-process-with-partial-path
+]
+src = ["hooks"]
+target-version = "py38"  # the minimum Python version supported, used by pyupgrade
