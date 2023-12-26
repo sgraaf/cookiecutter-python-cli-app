@@ -30,7 +30,7 @@ jobs:
       - name: Install Python ${{ matrix.python_version }}
         uses: actions/setup-python@v5
         with:
-          python_version: ${{ matrix.python_version }}
+          python-version: ${{ matrix.python_version }}
           cache: "pip"
 
       - name: Run nox "tests" session
