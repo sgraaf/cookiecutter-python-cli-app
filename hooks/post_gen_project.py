@@ -13,24 +13,27 @@ def possibly_install_pipx() -> None:
         subprocess.run([sys.executable, "-m", "pipx", "ensurepath"], check=False)
 
 
-# possibly install nox (and pipx)
-if shutil.which("nox") is None:
-    # possibly install pipx
-    possibly_install_pipx()
+def possibly_install_nox() -> None:
+    if shutil.which("nox") is None:
+        # possibly install pipx
+        possibly_install_pipx()
 
-    # install nox
-    subprocess.run([sys.executable, "-m", "pipx", "install", "nox"], check=False)
+        # install nox
+        subprocess.run([sys.executable, "-m", "pipx", "install", "nox"], check=False)
 
-# possibly install pre-commit (and pipx)
-if shutil.which("pre-commit") is None:
-    # possibly install pipx
-    possibly_install_pipx()
 
-    # install pre-commit
-    subprocess.run([sys.executable, "-m", "pipx", "install", "pre-commit"], check=False)
+def possibly_install_pre_commit() -> None:
+    if shutil.which("pre-commit") is None:
+        # possibly install pipx
+        possibly_install_pipx()
 
-# perform git initialization
-if "{{ cookiecutter.init_git }}" == "True":
+        # install pre-commit
+        subprocess.run(
+            [sys.executable, "-m", "pipx", "install", "pre-commit"], check=False
+        )
+
+
+def initialize_git_repository() -> None:
     # initialize Git repository
     subprocess.run(["git", "init", "-b", "main"], check=False)
 
@@ -58,7 +61,20 @@ if "{{ cookiecutter.init_git }}" == "True":
         check=False,
     )
 
-# create venv and install dependencies
-if "{{ cookiecutter.init_venv }}" == "True":
+
+def initialize_venv() -> None:
     # run nox "dev" session
     subprocess.run(["nox", "--session", "dev"], check=False)
+
+
+if __name__ == "__main__":
+    # possibly install nox (and pipx)
+    possibly_install_nox()
+    # possibly install pre-commit (and pipx)
+    possibly_install_pre_commit()
+    # perform git initialization
+    if "{{ cookiecutter.init_git }}" == "True":
+        initialize_git_repository()
+    # create venv and install dependencies
+    if "{{ cookiecutter.init_venv }}" == "True":
+        initialize_venv()

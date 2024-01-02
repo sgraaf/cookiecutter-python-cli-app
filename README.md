@@ -19,9 +19,11 @@ cookiecutter gh:sgraaf/cookiecutter-python-cli-app
 
 ## Features
 
+<!-- TODO: mention optional use of rich, choice of licenses, git and venv initialization -->
+
 -   Beautiful and powerful command-line interfaces with [Click](https://click.palletsprojects.com/)
 -   Linting with autofix (i.e. removing unused imports, formatting and Python syntax upgrades) with [ruff](https://beta.ruff.rs/docs/)
--   Code formatting with [Black](https://black.readthedocs.io/en/stable/) and [Prettier](https://prettier.io/)
+-   Code formatting with [ruff](https://beta.ruff.rs/docs/) and [Prettier](https://prettier.io/)
 -   Static type-checking with [mypy](http://www.mypy-lang.org/)
 -   Checks and fixes before every commit with [pre-commit](https://pre-commit.com/)
 -   Testing with [pytest](https://docs.pytest.org/en/stable/index.html)
