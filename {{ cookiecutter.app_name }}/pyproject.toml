@@ -80,6 +80,7 @@ name = "{{ cookiecutter.package_name }}"
 select = ["ALL"]
 ignore = [
     "E501",  # line too long, handled by black (pycodestyle)
+    "ANN002",  # missing-type-args (flake8-annotations)
     "ANN003",  # missing-type-kwargs (flake8-annotations)
     "ANN101",  # missing-type-self (flake8-annotations)
     "ANN102",  # missing-type-cls (flake8-annotations)
@@ -96,6 +97,17 @@ target-version = "py38"  # the minimum Python version supported, used by pyupgra
 "__init__.py" = [
     "F401",  # unused-import (Pyflakes)
 ]
+"noxfile.py" = [
+    "D100",  # undocumented-public-module (pydocstyle)
+    "ERA001",  # commented-out-code (eradicate)
+]
+"docs/conf.py" = [
+    "A001",  # builtin-variable-shadowing (flake8-builtins)
+]
+"src/{{ cookiecutter.package_name }}/cli.py" = [
+    "A001",  # builtin-variable-shadowing (flake8-builtins)
+    "A002",  # builtin-argument-shadowing (flake8-builtins)
+]
 "tests/**/test_*.py" = [
     "D",  # pydocstyle
     "ANN201",  # missing-return-type-undocumented-public-function (flake8-annotations)
@@ -103,13 +115,8 @@ target-version = "py38"  # the minimum Python version supported, used by pyupgra
     "SIM300",   # yoda-conditions (flake8-simplify)
     "PLR2004",   # magic-value-comparison (Pylint)
 ]
-"docs/conf.py" = [
-    "A001",  # builtin-variable-shadowing (flake8-builtins)
-]
-"noxfile.py" = [
-    "D100",  # undocumented-public-module (pydocstyle)
-    "ERA001",  # commented-out-code (eradicate)
-]
+
+
 
 [tool.ruff.isort]
 known-first-party = [
