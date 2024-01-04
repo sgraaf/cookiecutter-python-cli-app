@@ -3,14 +3,16 @@ import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
 
 from . import __version__
 
+context_settings = {"help_option_names": ["-h", "--help"]}
 
-@click.group()
+
+@click.group(context_settings=context_settings)
 {%- if cookiecutter.use_rich %}
 @click.rich_config(
     help_config=click.RichHelpConfiguration(use_rich_markup=True, width=88)
 )
 {%- endif %}
-@click.version_option(__version__)
+@click.version_option(__version__, "-v", "--version")
 def cli() -> None:
     """{{ cookiecutter.short_description }}"""
 
