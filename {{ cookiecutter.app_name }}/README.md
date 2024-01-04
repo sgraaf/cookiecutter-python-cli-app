@@ -17,23 +17,10 @@
 
 <!-- start docs-include-installation -->
 
-### From PyPI
-
 {{ cookiecutter.friendly_name }} is available on [PyPI](https://pypi.org/project/{{ cookiecutter.app_name }}/). Install with [pipx](https://pypa.github.io/pipx/) or your package manager of choice:
 
-```bash
+```sh
 pipx install {{ cookiecutter.app_name }}
-```
-
-### From source
-
-If you'd like, you can also install {{ cookiecutter.friendly_name }} from source (with [`flit`](https://flit.readthedocs.io/en/latest/)):
-
-```bash
-git clone https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}.git
-cd {{ cookiecutter.app_name }}
-python3 -m pip install flit
-flit install
 ```
 
 <!-- end docs-include-installation -->
