@@ -42,7 +42,7 @@ from click.testing import CliRunner
 runner = CliRunner()
 result = runner.invoke(cli.cli, ["--help"], terminal_width=88)
 help = result.output.replace("Usage: cli", "Usage: {{ cookiecutter.app_name }}")
-cog.outl(f"\n```sh\ncookiecutter-python-cli-app-demo-with-rich --help\n{help.rstrip()}\n```\n")
+cog.outl(f"\n```sh\n{{ cookiecutter.app_name }} --help\n{help.rstrip()}\n```\n")
 ]]] -->
 <!-- [[[end]]] -->
 
