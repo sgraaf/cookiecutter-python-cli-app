@@ -1,8 +1,8 @@
 [tool.ruff]
 select = ["ALL"]
 ignore = [
-    "E501",  # line too long, handled by black
-    "COM",  # flake8-commas, handled by black
+    "E501",  # line too long, handled by ruff-format
+    "COM",  # flake8-commas, handled by ruff-format
     "CPY",  # flake8-copyright
     "ISC001",  # single-line-implicit-string-concatenation
     "INP",  # flake8-no-pep420
