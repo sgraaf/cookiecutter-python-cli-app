@@ -9,10 +9,6 @@ ci:
   autoupdate_schedule: quarterly
   autoupdate_commit_msg: ":arrow_up: [pre-commit.ci] pre-commit autoupdate"
 
-default_language_version:
-  # Black recommends specifying the latest version of Python supported
-  python: python3.12
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
