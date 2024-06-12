@@ -1,6 +1,10 @@
 """Sphinx configuration."""
+
+from __future__ import annotations
+
 import sys
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import {{ cookiecutter.package_name }}  # noqa: E402
@@ -47,6 +51,6 @@ autodoc_typehints_description_target = "documented"
 
 html_theme = "furo"
 html_static_path = ["_static"]
-html_theme_options = {
-    "top_of_page_button": None,
+html_theme_options: dict[str, Any] = {
+    "top_of_page_buttons": [],
 }
