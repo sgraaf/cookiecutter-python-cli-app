@@ -89,17 +89,24 @@ def dev(session: nox.Session) -> None:
 def cog(session: nox.Session) -> None:
     """Run cog."""
     session.install("cogapp", "PyYAML", ".")
-    session.run("cog", *session.posargs, "-r", "noxfile.py")
-    session.run("cog", *session.posargs, "-r", "README.md")
-    session.run("cog", *session.posargs, "-r", "docs/cli.md")
-    session.notify("pre_commit", ["trailing-whitespace"])
+
+    cog_input_files = ["noxfile.py", "README.md", "docs/cli.md"]
+    for cog_input_file in cog_input_files:
+        session.run("cog", *session.posargs, "-r", cog_input_file)
+
+    session.notify("pre_commit", ["trailing-whitespace", "--files", *cog_input_files])
 
 
 @nox.session
 def pre_commit(session: nox.Session) -> None:
     """Run pre-commit hooks."""
+    # fmt: off
+    args = session.posargs or [
+        "--all-files",  # run on all the files in the repo.
+    ]
+    # fmt: on
     session.install("pre-commit")
-    session.run("pre-commit", "run", *session.posargs, "--all-files")
+    session.run("pre-commit", "run", *args)
 
 
 @nox.session(python=ALL_PYTHON_VERSIONS, tags=["tests"])
