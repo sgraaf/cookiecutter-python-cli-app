@@ -1,7 +1,7 @@
 {
-    "app_name": "python-cli-app",
+    "friendly_name": "Python CLI App",
+    "app_name": "{{ cookiecutter.friendly_name | slugify }}",
     "package_name": "{{ cookiecutter.app_name.replace('-', '_').lower() }}",
-    "friendly_name": "{{ cookiecutter.app_name.replace('-', ' ').title() }}",
     "short_description": "{{ cookiecutter.friendly_name }} is a Python command-line application for ...",
     "use_rich": [false, true],
     "author": "",
