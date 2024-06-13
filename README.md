@@ -33,10 +33,3 @@ cookiecutter gh:sgraaf/cookiecutter-python-cli-app
 -   Automated release builds and uploads to [PyPI](https://pypi.org/)
 
 This template supports Python 3.8, 3.9, 3.10, 3.11 and 3.12.
-
-## ToD0
-
-[ ] GH Repo creation with secret
-[ ] ReadTheDocs
-[ ] pre-commit.ci
-[ ] tests
