@@ -32,6 +32,9 @@ DOCS_PYTHON_VERSION = "3.12"
 
 ROOT_DIR = Path(__file__).resolve().parent
 VENV_DIR = ROOT_DIR / ".venv"
+DOCS_DIR = ROOT_DIR / "docs"
+DOCS_SOURCE_DIR = DOCS_DIR
+DOCS_BUILD_DIR = DOCS_DIR / "_build" / "html"
 
 
 @nox.session
@@ -124,8 +127,25 @@ def docs(session: nox.Session) -> None:
             "-b", builder,  # selects a builder
             "-d", str(Path(tmp_dir) / "doctrees"),  # directory to save doctree pickles
             "-D", "language=en",  # set language
-            "docs",  # source directory
-            str(Path("docs") / "_build" / "html"),  # output directory
+            str(DOCS_SOURCE_DIR),  # source directory
+            str(DOCS_BUILD_DIR),  # output directory
         )
         # fmt: on
     session.run("python", "-m", "doctest", "README.md")
+
+
+@nox.session(name="docs-live", python=DOCS_PYTHON_VERSION)
+def docs_live(session: nox.Session) -> None:
+    """Builds and serves the docs with hot reloading on file changes."""
+    # fmt: off
+    args = session.posargs or [
+        "--open-browser",  # open the browser after building documentation
+        str(DOCS_SOURCE_DIR),  # source directory
+        str(DOCS_BUILD_DIR),  # output directory
+    ]
+    # fmt: on
+
+    session.install(".[docs]")
+    session.install("sphinx-autobuild")
+
+    session.run("sphinx-autobuild", *args)
