@@ -30,9 +30,9 @@
     "init_git": [true, false],
     "init_venv": [true, false],
     "__prompts__": {
-        "app_name": "The name (slug) of your project",
+        "friendly_name": "The friendly name of your app (for use in documentation, etc.)",
+        "app_name": "The name (slug) of your app",
         "package_name": "The name of your package",
-        "friendly_name": "The friendly name of your project (for use in documentation, etc.)",
         "short_description": "A short description of your projec",
         "use_rich": "Use [link=https://github.com/Textualize/rich]Rich[/link] for rich text and beautiful formatting in the terminal",
         "author": "Your (full) name",
