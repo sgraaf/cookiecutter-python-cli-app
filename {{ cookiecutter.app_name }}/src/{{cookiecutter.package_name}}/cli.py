@@ -1,4 +1,5 @@
 """Main CLI for {{ cookiecutter.app_name }}."""
+
 import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
 
 from . import __version__
