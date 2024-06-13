@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from shutil import rmtree
 
 import nox
 
@@ -32,9 +33,13 @@ DOCS_PYTHON_VERSION = "3.12"
 
 ROOT_DIR = Path(__file__).resolve().parent
 VENV_DIR = ROOT_DIR / ".venv"
+
 DOCS_DIR = ROOT_DIR / "docs"
 DOCS_SOURCE_DIR = DOCS_DIR
 DOCS_BUILD_DIR = DOCS_DIR / "_build" / "html"
+
+PACKAGE_BUILD_DIR = ROOT_DIR / "build"
+PACKAGE_DIST_DIR = ROOT_DIR / "dist"
 
 
 @nox.session
@@ -156,3 +161,48 @@ def docs_live(session: nox.Session) -> None:
     session.install("sphinx-autobuild")
 
     session.run("sphinx-autobuild", *args)
+
+
+@nox.session(name="clear-packages", python=False)
+def clear_packages(session: nox.Session) -> None:  # noqa: ARG001
+    """Remove build and dist directories."""
+    if PACKAGE_BUILD_DIR.is_dir():
+        rmtree(PACKAGE_BUILD_DIR)
+    if PACKAGE_DIST_DIR.is_dir():
+        rmtree(PACKAGE_DIST_DIR)
+
+
+@nox.session(name="build-package")
+def build_package(session: nox.Session) -> None:
+    """Builds the package, both as a source distribution (sdist) and as a wheel."""
+    args = session.posargs or ["--outdir", PACKAGE_DIST_DIR, ROOT_DIR]
+    session.install("build")
+    session.run("python", "-m", "build", *args)
+
+
+@nox.session(name="upload-package")
+def upload_package(session: nox.Session) -> None:
+    """Builds the package, both as a source distribution (sdist) and as a wheel."""
+    session.install("twine")
+
+    # check whether the package's long description will render correctly on PyPI
+    session.run("twine", "check", "--strict", f"{PACKAGE_DIST_DIR.as_posix()}/*")
+
+    # upload the package(s) to (Test)PyPI
+    session.run("twine", "upload", *session.posargs, f"{PACKAGE_DIST_DIR.as_posix()}/*")
+
+
+@nox.session(name="release-to-testpypi", python=False)
+def release_to_testpypi(session: nox.Session) -> None:
+    """Clears, builds and uploads the package to TestPyPI."""
+    session.notify("clear-packages")
+    session.notify("build-package")
+    session.notify("upload-package", ["--repository", "testpypi"])
+
+
+@nox.session(name="release-to-pypi", python=False)
+def release_to_pypi(session: nox.Session) -> None:
+    """Clears, builds and uploads the package to PyPI."""
+    session.notify("clear-packages")
+    session.notify("build-package")
+    session.notify("upload-package")
