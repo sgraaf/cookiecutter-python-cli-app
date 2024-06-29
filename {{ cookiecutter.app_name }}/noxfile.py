@@ -99,10 +99,10 @@ def cog(session: nox.Session) -> None:
     for cog_input_file in cog_input_files:
         session.run("cog", *session.posargs, "-r", cog_input_file)
 
-    session.notify("pre_commit", ["trailing-whitespace", "--files", *cog_input_files])
+    session.notify("pre-commit", ["trailing-whitespace", "--files", *cog_input_files])
 
 
-@nox.session
+@nox.session(name="pre-commit")
 def pre_commit(session: nox.Session) -> None:
     """Run pre-commit hooks."""
     # fmt: off
