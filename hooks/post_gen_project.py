@@ -44,7 +44,7 @@ def initialize_git_repository() -> None:
     # add files
     subprocess.run(["git", "add", "."], check=False)
 
-    # run nox "cog" and "pre_commit" sessions
+    # run nox "cog" and "pre-commit" sessions
     subprocess.run(["nox", "--session", "cog", "pre-commit"], check=False)
 
     # possibly re-add files

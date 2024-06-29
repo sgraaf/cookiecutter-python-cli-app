@@ -4,7 +4,7 @@ from shutil import rmtree
 
 import nox
 
-nox.options.sessions = ["pre_commit", "tests", "docs"]
+nox.options.sessions = ["pre-commit", "tests", "docs"]
 nox.options.reuse_existing_virtualenvs = True
 nox.options.error_on_external_run = True
 
