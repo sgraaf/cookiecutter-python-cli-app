@@ -24,9 +24,9 @@ class CommandResult:
 
 def run_command_in_shell(command: Command, **kwargs: Any) -> CommandResult:
     """Execute a command through the shell, capturing the exit code and output."""
-    result = subprocess.run(  # noqa: S602
+    result = subprocess.run(
         command,
-        shell=True,
+        shell=True,  # noqa: S602
         capture_output=True,
         check=False,
         **kwargs,
