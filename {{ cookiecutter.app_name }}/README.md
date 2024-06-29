@@ -33,7 +33,7 @@ Check out the [{{ cookiecutter.friendly_name }} documentation](https://{{ cookie
 
 <!-- start docs-include-usage -->
 
-Running `{{ cookiecutter.app_name }} --help` or `python -m {{ cookiecutter.package_name }} --help` shows a list of all of the available options and commands:
+Running `{{ cookiecutter.app_name }} --help` or `python -m {{ cookiecutter.package_name }} --help` shows a list of all of the available options and arguments:
 
 <!-- [[[cog
 import cog
