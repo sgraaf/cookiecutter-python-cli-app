@@ -1,5 +1,6 @@
 """Utility functions for testing {{ cookiecutter.app_name }}."""
 
+import subprocess
 from collections.abc import Sequence
 from dataclasses import dataclass
 from os import PathLike
@@ -24,9 +25,9 @@ class CommandResult:
 
 def run_command_in_shell(command: Command, **kwargs: Any) -> CommandResult:
     """Execute a command through the shell, capturing the exit code and output."""
-    result = subprocess.run(
+    result = subprocess.run(  # noqa: S602
         command,
-        shell=True,  # noqa: S602
+        shell=True,
         capture_output=True,
         check=False,
         **kwargs,

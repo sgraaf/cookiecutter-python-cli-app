@@ -9,7 +9,7 @@ from {{ cookiecutter.package_name }}.cli import cli
 from .utils import run_command_in_shell
 
 
-@pytest.fixture()
+@pytest.fixture
 def runner() -> CliRunner:
     return CliRunner()
 

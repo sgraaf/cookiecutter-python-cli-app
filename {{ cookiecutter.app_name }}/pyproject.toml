@@ -82,8 +82,6 @@ lint.ignore = [
     "E501",  # line too long (pycodestyle), handled by ruff-format
     "ANN002",  # missing-type-args (flake8-annotations)
     "ANN003",  # missing-type-kwargs (flake8-annotations)
-    "ANN101",  # missing-type-self (flake8-annotations)
-    "ANN102",  # missing-type-cls (flake8-annotations)
     "ANN401",  # any-type (flake8-annotations)
     "COM",  # flake8-commas, handled by ruff-format
     "CPY",  # flake8-copyright
