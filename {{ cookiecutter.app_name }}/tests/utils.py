@@ -1,9 +1,9 @@
 """Utility functions for testing {{ cookiecutter.app_name }}."""
 
-import subprocess
+from collections.abc import Sequence
 from dataclasses import dataclass
 from os import PathLike
-from typing import Any, Sequence, Union
+from typing import Any, Union
 
 # copied from `typeshed`
 StrOrBytesPath = Union[str, bytes, PathLike]
