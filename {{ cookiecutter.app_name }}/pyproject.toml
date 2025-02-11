@@ -29,15 +29,15 @@ classifiers = [
     {% endif -%}
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3 :: Only",
     "Typing :: Typed",
 ]
-requires-python = "~=3.8"
+requires-python = "~=3.9"
 dependencies = [
     "click",
 {%- if cookiecutter.use_rich %}
@@ -91,7 +91,7 @@ lint.ignore = [
     "INP",  # flake8-no-pep420
 ]
 src = ["src", "tests", "docs"]
-target-version = "py38"  # the minimum Python version supported, used by pyupgrade
+target-version = "py39"  # the minimum Python version supported, used by pyupgrade
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = [

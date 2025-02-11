@@ -15,11 +15,11 @@ ALL_PYTHON_VERSIONS = [
     #     if (match := re.search(r"Programming Language :: Python :: (?P<version>3\.\d+)", line)) is not None:
     #         cog.outl(f'"{match.group("version")}",')
     # ]]]
-    "3.8",
     "3.9",
     "3.10",
     "3.11",
     "3.12",
+    "3.13",
     # [[[end]]]
 ]
 
@@ -28,7 +28,7 @@ ALL_PYTHON_VERSIONS = [
 # rtd = yaml.safe_load(open(".readthedocs.yaml"))
 # cog.outl(f'DOCS_PYTHON_VERSION = "{rtd["build"]["tools"]["python"]}"')
 # ]]]
-DOCS_PYTHON_VERSION = "3.12"
+DOCS_PYTHON_VERSION = "3.13"
 # [[[end]]]
 
 ROOT_DIR = Path(__file__).resolve().parent

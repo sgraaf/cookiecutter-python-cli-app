@@ -12,4 +12,4 @@ ignore = [
     "S607",  # start-process-with-partial-path
 ]
 src = ["hooks"]
-target-version = "py38"  # the minimum Python version supported, used by pyupgrade
+target-version = "py39"  # the minimum Python version supported, used by pyupgrade
