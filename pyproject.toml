@@ -1,6 +1,6 @@
 [tool.ruff]
-select = ["ALL"]
-ignore = [
+lint.select = ["ALL"]
+lint.ignore = [
     "E501",  # line too long, handled by ruff-format
     "COM",  # flake8-commas, handled by ruff-format
     "CPY",  # flake8-copyright

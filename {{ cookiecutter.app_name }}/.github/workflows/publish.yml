@@ -13,15 +13,15 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v4
 
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Install the latest version of uv with caching enabled
+        id: setup-uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.13"
-          cache: pip
+          enable-cache: true
 
       - name: Publish to PyPI
         env:
           FLIT_USERNAME: __token__
           FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: pipx run flit publish
+        run: uvx flit publish
 {% endraw -%}

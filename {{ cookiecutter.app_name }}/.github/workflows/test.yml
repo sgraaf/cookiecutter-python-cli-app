@@ -27,12 +27,12 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v4
 
-      - name: Install Python ${{ matrix.python_version }}
-        uses: actions/setup-python@v5
+      - name: Install the latest version of uv with caching enabled
+        id: setup-uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: ${{ matrix.python_version }}
-          cache: "pip"
+          enable-cache: true
 
       - name: Run nox "tests" session
-        run: pipx run nox --error-on-missing-interpreters --session tests-${{ matrix.python_version }}
+        run: uvx nox --error-on-missing-interpreters --session tests-${{ matrix.python_version }}
 {% endraw -%}

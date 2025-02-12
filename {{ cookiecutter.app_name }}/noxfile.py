@@ -1,10 +1,10 @@
-import os
 from pathlib import Path
 from shutil import rmtree
 
 import nox
 
 nox.options.sessions = ["pre-commit", "tests", "docs"]
+nox.options.default_venv_backend = "uv|virtualenv"
 nox.options.reuse_existing_virtualenvs = True
 nox.options.error_on_external_run = True
 
@@ -45,46 +45,26 @@ PACKAGE_DIST_DIR = ROOT_DIR / "dist"
 @nox.session
 def dev(session: nox.Session) -> None:
     """Sets up a Python development environment for the project."""
-    # install `virtualenv` CLI tool into nox's "dev" virtual environment (venv)
-    session.install("virtualenv")
-
-    # initialize development environment (venv)
+    # create the development environment (venv)
     session.run(
-        "virtualenv",
+        "uv",
+        "venv",
+        "--seed",
         "--prompt",
         "{{ cookiecutter.app_name }}",
         str(VENV_DIR),
-        silent=True,
-    )
-
-    # determine venv executable
-    if os.name == "posix":
-        venv_executable = VENV_DIR / "bin" / "python"
-    else:
-        venv_executable = VENV_DIR / "Scripts" / "python.exe"
-
-    # upgrade pip, setuptools and wheel
-    session.run(
-        str(venv_executable),
-        "-m",
-        "pip",
-        "install",
-        "--upgrade",
-        "pip",
-        "setuptools",
-        "wheel",
         external=True,
         silent=True,
     )
 
     # install the current package in editable mode (along with its dependencies)
     session.run(
-        str(venv_executable),
-        "-m",
+        "uv",
         "pip",
         "install",
         "--editable",
         ".[dev]",
+        env={"VIRTUAL_ENV": str(VENV_DIR)},
         external=True,
         silent=True,
     )

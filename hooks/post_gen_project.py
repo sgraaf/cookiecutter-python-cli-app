@@ -3,34 +3,30 @@ import subprocess
 import sys
 
 
-def possibly_install_pipx() -> None:
-    if shutil.which("pipx") is None:
-        # install pipx
+def possibly_install_uv() -> None:
+    if shutil.which("uv") is None:
+        # install uv
         subprocess.run(
-            [sys.executable, "-m", "pip", "install", "--user", "pipx"], check=False
+            [sys.executable, "-m", "pip", "install", "--user", "uv"], check=False
         )
-        # add pipx to PATH
-        subprocess.run([sys.executable, "-m", "pipx", "ensurepath"], check=False)
 
 
 def possibly_install_nox() -> None:
     if shutil.which("nox") is None:
-        # possibly install pipx
-        possibly_install_pipx()
+        # possibly install uv
+        possibly_install_uv()
 
         # install nox
-        subprocess.run([sys.executable, "-m", "pipx", "install", "nox"], check=False)
+        subprocess.run(["uv", "tool", "install", "nox"], check=False)
 
 
 def possibly_install_pre_commit() -> None:
     if shutil.which("pre-commit") is None:
-        # possibly install pipx
-        possibly_install_pipx()
+        # possibly install uv
+        possibly_install_uv()
 
         # install pre-commit
-        subprocess.run(
-            [sys.executable, "-m", "pipx", "install", "pre-commit"], check=False
-        )
+        subprocess.run(["uv", "tool", "install", "pre-commit"], check=False)
 
 
 def initialize_git_repository() -> None:
@@ -68,9 +64,9 @@ def initialize_venv() -> None:
 
 
 if __name__ == "__main__":
-    # possibly install nox (and pipx)
+    # possibly install nox (and uv)
     possibly_install_nox()
-    # possibly install pre-commit (and pipx)
+    # possibly install pre-commit (and uv)
     possibly_install_pre_commit()
     # perform git initialization
     if "{{ cookiecutter.init_git }}" == "True":

@@ -26,15 +26,15 @@ jobs:
           token: ${{ secrets.X_GITHUB_PAT }}
           path: ${{ env.CURRENT_DEMO }}
 
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Install the latest version of uv with caching enabled
+        id: setup-uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.12"
-          cache: pip
+          enable-cache: true
 
       - name: Build Demo
         run: |
-          cat "${{ env.TEMPLATE }}/.github/workflows/input-for-demo.txt" | pipx run cookiecutter "${{ env.TEMPLATE }}"
+          cat "${{ env.TEMPLATE }}/.github/workflows/input-for-demo.txt" | uvx cookiecutter "${{ env.TEMPLATE }}"
           find "${{ env.DEMO }}"
 
       - name: Commit and push changes

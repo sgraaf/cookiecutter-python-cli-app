@@ -17,10 +17,10 @@
 
 <!-- start docs-include-installation -->
 
-{{ cookiecutter.friendly_name }} is available on [PyPI](https://pypi.org/project/{{ cookiecutter.app_name }}/). Install with [pipx](https://pypa.github.io/pipx/) or your package manager of choice:
+{{ cookiecutter.friendly_name }} is available on [PyPI](https://pypi.org/project/{{ cookiecutter.app_name }}/). Install with [uv](https://docs.astral.sh/uv/) or your package manager of choice:
 
 ```sh
-pipx install {{ cookiecutter.app_name }}
+uv tool install {{ cookiecutter.app_name }}
 ```
 
 <!-- end docs-include-installation -->
