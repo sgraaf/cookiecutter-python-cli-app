@@ -163,7 +163,7 @@ def build_package(session: nox.Session) -> None:
 def upload_package(session: nox.Session) -> None:
     """Builds the package, both as a source distribution (sdist) and as a wheel."""
     # check whether the package's long description will render correctly on PyPI
-    session.run("uvx" "twine", "check", "--strict", f"{PACKAGE_DIST_DIR.as_posix()}/*")
+    session.run("uvx", "twine", "check", "--strict", f"{PACKAGE_DIST_DIR.as_posix()}/*")
 
     # upload the package(s) to (Test)PyPI
     session.run("uv", "publish", *session.posargs, f"{PACKAGE_DIST_DIR.as_posix()}/*")
