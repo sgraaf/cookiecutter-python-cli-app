@@ -1,9 +1,10 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "{{ cookiecutter.app_name }}"
+description = "{{ cookiecutter.short_description }}"
 authors = [{name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -44,7 +45,7 @@ dependencies = [
     "rich_click",
 {%- endif %}
 ]
-dynamic = ["version", "description"]
+dynamic = ["version"]
 
 [project.optional-dependencies]
 tests = [
@@ -71,10 +72,8 @@ Changelog = "https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/change
 [project.scripts]
 {{ cookiecutter.app_name }} = "{{ cookiecutter.package_name }}.cli:cli"
 
-{% if cookiecutter.package_name != cookiecutter.app_name.replace('-', '_') -%}
-[tool.flit.module]
-name = "{{ cookiecutter.package_name }}"
-{% endif -%}
+[tool.setuptools.dynamic]
+version = {attr = "{{ cookiecutter.package_name }}.__version__"}
 
 [tool.ruff]
 lint.select = ["ALL"]
@@ -116,8 +115,6 @@ target-version = "py39"  # the minimum Python version supported, used by pyupgra
     "SIM300",   # yoda-conditions (flake8-simplify)
     "PLR2004",   # magic-value-comparison (Pylint)
 ]
-
-
 
 [tool.ruff.lint.isort]
 known-first-party = [

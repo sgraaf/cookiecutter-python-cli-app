@@ -26,7 +26,10 @@ def possibly_install_pre_commit() -> None:
         possibly_install_uv()
 
         # install pre-commit
-        subprocess.run(["uv", "tool", "install", "pre-commit"], check=False)
+        subprocess.run(
+            ["uv", "tool", "install", "pre-commit", "--with", "pre-commit-uv"],
+            check=False,
+        )
 
 
 def initialize_git_repository() -> None:

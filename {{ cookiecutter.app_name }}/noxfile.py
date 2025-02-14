@@ -42,7 +42,7 @@ PACKAGE_BUILD_DIR = ROOT_DIR / "build"
 PACKAGE_DIST_DIR = ROOT_DIR / "dist"
 
 
-@nox.session
+@nox.session(python=False)
 def dev(session: nox.Session) -> None:
     """Sets up a Python development environment for the project."""
     # create the development environment (venv)
@@ -90,7 +90,7 @@ def pre_commit(session: nox.Session) -> None:
         "--all-files",  # run on all the files in the repo.
     ]
     # fmt: on
-    session.install("pre-commit")
+    session.install("pre-commit-uv")
     session.run("pre-commit", "run", *args)
 
 
@@ -152,24 +152,21 @@ def clear_packages(session: nox.Session) -> None:  # noqa: ARG001
         rmtree(PACKAGE_DIST_DIR)
 
 
-@nox.session(name="build-package")
+@nox.session(name="build-package", python=False)
 def build_package(session: nox.Session) -> None:
     """Builds the package, both as a source distribution (sdist) and as a wheel."""
-    args = session.posargs or ["--outdir", PACKAGE_DIST_DIR, ROOT_DIR]
-    session.install("build")
-    session.run("python", "-m", "build", *args)
+    args = session.posargs or ["--out-dir", PACKAGE_DIST_DIR, ROOT_DIR]
+    session.run("uv", "build", *args)
 
 
 @nox.session(name="upload-package")
 def upload_package(session: nox.Session) -> None:
     """Builds the package, both as a source distribution (sdist) and as a wheel."""
-    session.install("twine")
-
     # check whether the package's long description will render correctly on PyPI
-    session.run("twine", "check", "--strict", f"{PACKAGE_DIST_DIR.as_posix()}/*")
+    session.run("uvx" "twine", "check", "--strict", f"{PACKAGE_DIST_DIR.as_posix()}/*")
 
     # upload the package(s) to (Test)PyPI
-    session.run("twine", "upload", *session.posargs, f"{PACKAGE_DIST_DIR.as_posix()}/*")
+    session.run("uv", "publish", *session.posargs, f"{PACKAGE_DIST_DIR.as_posix()}/*")
 
 
 @nox.session(name="release-to-testpypi", python=False)

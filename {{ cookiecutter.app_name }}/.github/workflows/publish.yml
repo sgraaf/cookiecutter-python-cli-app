@@ -19,9 +19,8 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Publish to PyPI
+      - name: Run nox "release-to-pypi" session
         env:
-          FLIT_USERNAME: __token__
-          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: uvx flit publish
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uvx nox --session release-to-pypi
 {% endraw -%}
