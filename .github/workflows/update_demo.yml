@@ -28,7 +28,7 @@ jobs:
 
       - name: Install the latest version of uv with caching enabled
         id: setup-uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
 
