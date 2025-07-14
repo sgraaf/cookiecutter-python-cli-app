@@ -1,9 +1,10 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["uv-build"]
+build-backend = "uv_build"
 
 [project]
 name = "{{ cookiecutter.app_name }}"
+version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.short_description }}"
 authors = [{name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}"}]
 readme = "README.md"
@@ -45,9 +46,8 @@ dependencies = [
     "rich_click",
 {%- endif %}
 ]
-dynamic = ["version"]
 
-[project.optional-dependencies]
+[dependency-groups]
 tests = [
     "pytest",
 ]
@@ -55,12 +55,12 @@ docs = [
     "furo",
     "myst-parser",
     "sphinx",
-    "sphinx-autobuild",
     "sphinx-copybutton",
     "sphinxext-opengraph",
 ]
 dev = [
-    "{{ cookiecutter.app_name }}[tests,docs]",
+    { include-group = "tests" },
+    { include-group = "docs" },
 ]
 
 [project.urls]
@@ -70,10 +70,7 @@ Changelog = "https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/change
 "Issue Tracker" = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/issues"
 
 [project.scripts]
-{{ cookiecutter.app_name }} = "{{ cookiecutter.package_name }}.cli:cli"
-
-[tool.setuptools.dynamic]
-version = {attr = "{{ cookiecutter.package_name }}.__version__"}
+{{ cookiecutter.app_name }} = "{{ cookiecutter.package_name }}.__main__:cli"
 
 [tool.ruff]
 lint.select = ["ALL"]
@@ -88,7 +85,6 @@ lint.ignore = [
     "INP",  # flake8-no-pep420
 ]
 src = ["src", "tests", "docs"]
-target-version = "py39"  # the minimum Python version supported, used by pyupgrade
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = [

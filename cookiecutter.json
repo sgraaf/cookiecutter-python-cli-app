@@ -7,7 +7,7 @@
     "author": "",
     "email": "",
     "github_username": "",
-    "version": "0.1.0",
+    "version": "{% now 'utc', '%Y' %}.1.0",
     "copyright_year": "{% now 'utc', '%Y' %}",
     "license": [
         "mit",

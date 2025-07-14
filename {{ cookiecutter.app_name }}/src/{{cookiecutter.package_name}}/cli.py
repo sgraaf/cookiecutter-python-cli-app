@@ -1,8 +1,8 @@
 """Main CLI for {{ cookiecutter.app_name }}."""
 
-import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
+from importlib import metadata
 
-from . import __version__
+import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
 
 
 @click.command(
@@ -24,7 +24,7 @@ from . import __version__
     is_flag=True,
     help="Reverse the input.",
 )
-@click.version_option(__version__, "-v", "--version")
+@click.version_option(metadata.version("{{ cookiecutter.package_name }}"), "-v", "--version")
 def cli(input_: str, *, reverse: bool = False) -> None:
     """Repeat the input.
 

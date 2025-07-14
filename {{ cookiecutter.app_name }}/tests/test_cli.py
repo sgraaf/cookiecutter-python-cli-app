@@ -1,5 +1,4 @@
-from importlib import import_module
-from importlib.metadata import version
+from importlib import import_module, metadata
 
 import pytest
 from click.testing import CliRunner
@@ -36,5 +35,5 @@ def test_version_runner(runner: CliRunner) -> None:
     result = runner.invoke(cli, ["--version"])
     assert result.exit_code == 0
     assert (
-        result.output == f"cli, version {version('{{ cookiecutter.app_name }}')}\n"
+        result.output == f"cli, version {metadata.version('{{ cookiecutter.app_name }}')}\n"
     )

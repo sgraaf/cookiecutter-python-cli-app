@@ -4,9 +4,9 @@ from shutil import rmtree
 import nox
 
 nox.options.sessions = ["pre-commit", "tests", "docs"]
-nox.options.default_venv_backend = "uv|virtualenv"
-nox.options.reuse_existing_virtualenvs = True
+nox.options.default_venv_backend = "uv"
 nox.options.error_on_external_run = True
+nox.needs_version = ">=2025.5.1"
 
 ALL_PYTHON_VERSIONS = [
     # [[[cog
@@ -52,18 +52,22 @@ def dev(session: nox.Session) -> None:
         "--seed",
         "--prompt",
         "{{ cookiecutter.app_name }}",
+        "--python",
+        ALL_PYTHON_VERSIONS[0],
         str(VENV_DIR),
         external=True,
         silent=True,
     )
 
-    # install the current package in editable mode (along with its dependencies)
+    # install the current package in editable mode (along with development dependencies)
     session.run(
         "uv",
         "pip",
         "install",
         "--editable",
-        ".[dev]",
+        ".",
+        "--group",
+        "dev",
         env={"VIRTUAL_ENV": str(VENV_DIR)},
         external=True,
         silent=True,
@@ -97,22 +101,23 @@ def pre_commit(session: nox.Session) -> None:
 @nox.session(python=ALL_PYTHON_VERSIONS, tags=["tests"])
 def tests(session: nox.Session) -> None:
     """Run tests."""
-    session.install(".[tests]")
+    session.install(".", "--group", "tests")
     session.run("pytest", *session.posargs)
 
 
 @nox.session(python=DOCS_PYTHON_VERSION)
 def docs(session: nox.Session) -> None:
     """Builds and tests the docs."""
-    session.install(".[docs]")
+    args = session.posargs or ["html", "doctest"]
+
+    session.install(".", "--group", "docs")
 
     # create a temporary directory to store the doctrees
     tmp_dir = session.create_tmp()
 
-    for builder in ["html", "doctest"]:
-        # fmt: off
+    for builder in args:
         session.run(
-            "python", "-m", "sphinx",
+            "python", "-Im", "sphinx",
             "-T",  # display full traceback when an exception occurs
             "-E",  # rebuild the environment
             "-W", "--keep-going",  # turn warnings into errors, but continue to the end of the build
@@ -121,9 +126,7 @@ def docs(session: nox.Session) -> None:
             "-D", "language=en",  # set language
             str(DOCS_SOURCE_DIR),  # source directory
             str(DOCS_BUILD_DIR),  # output directory
-        )
-        # fmt: on
-    session.run("python", "-m", "doctest", "README.md")
+        )  # fmt: skip
 
 
 @nox.session(name="docs-live", python=DOCS_PYTHON_VERSION)
@@ -137,8 +140,7 @@ def docs_live(session: nox.Session) -> None:
     ]
     # fmt: on
 
-    session.install(".[docs]")
-    session.install("sphinx-autobuild")
+    session.install(".", "--group", "docs", "sphinx-autobuild")
 
     session.run("sphinx-autobuild", *args)
 

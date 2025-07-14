@@ -1,13 +1,7 @@
 """Sphinx configuration."""
 
-from __future__ import annotations
-
-import sys
-from pathlib import Path
+from importlib import metadata
 from typing import Any
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import {{ cookiecutter.package_name }}
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -15,7 +9,8 @@ import {{ cookiecutter.package_name }}
 project = "{{ cookiecutter.friendly_name }}"
 copyright = "{{ cookiecutter.copyright_year }}, {{ cookiecutter.author }}"
 author = "{{ cookiecutter.author }}"
-release = {{ cookiecutter.package_name }}.__version__
+release = metadata.version("{{ cookiecutter.package_name }}")
+version = release.rsplit(".", 1)[0]
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
