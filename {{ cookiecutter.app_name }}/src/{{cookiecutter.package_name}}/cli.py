@@ -24,7 +24,9 @@ import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
     is_flag=True,
     help="Reverse the input.",
 )
-@click.version_option(metadata.version("{{ cookiecutter.package_name }}"), "-v", "--version")
+@click.version_option(
+    metadata.version("{{ cookiecutter.package_name }}"), "-v", "--version"
+)
 def cli(input_: str, *, reverse: bool = False) -> None:
     """Repeat the input.
 
