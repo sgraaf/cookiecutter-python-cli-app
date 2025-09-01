@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout ${{ env.TEMPLATE }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: ${{ env.TEMPLATE }}
 
       - name: Checkout ${{ env.DEMO }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: "sgraaf/${{ env.DEMO }}"
           token: ${{ secrets.X_GITHUB_PAT }}
