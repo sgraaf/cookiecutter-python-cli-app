@@ -4,6 +4,8 @@ from importlib import metadata
 
 import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
 
+__version__ = metadata.version("{{ cookiecutter.app_name }}")
+
 
 @click.command(
     context_settings={"help_option_names": ["-h", "--help"], "show_default": True}
@@ -13,7 +15,7 @@ import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
     help_config=click.RichHelpConfiguration(
         width=88,
         show_arguments=True,
-        use_rich_markup=True,
+        text_markup="rich",
     ),
 )
 {%- endif %}
@@ -24,9 +26,7 @@ import {%- if cookiecutter.use_rich %} rich_click as {%- endif %} click
     is_flag=True,
     help="Reverse the input.",
 )
-@click.version_option(
-    metadata.version("{{ cookiecutter.package_name }}"), "-v", "--version"
-)
+@click.version_option(__version__, "-v", "--version")
 def cli(input_: str, *, reverse: bool = False) -> None:
     """Repeat the input.
 

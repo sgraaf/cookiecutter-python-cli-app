@@ -1,15 +1,16 @@
 [tool.ruff]
-lint.select = ["ALL"]
-lint.ignore = [
-    "E501",  # line too long, handled by ruff-format
-    "COM",  # flake8-commas, handled by ruff-format
+src = ["hooks"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM",  # flake8-commas, handled by the formatter
     "CPY",  # flake8-copyright
-    "ISC001",  # single-line-implicit-string-concatenation
-    "INP",  # flake8-no-pep420
     "D",  # pydocstyle
+    "E501",  # line too long, handled by the formatter
+    "INP",  # flake8-no-pep420
+    "ISC001",  # single-line-implicit-string-concatenation
     "PLR0133",  # comparison-of-constant
     "S603",  # subprocess-without-shell-equals-true
     "S607",  # start-process-with-partial-path
 ]
-src = ["hooks"]
-target-version = "py39"  # the minimum Python version supported, used by pyupgrade

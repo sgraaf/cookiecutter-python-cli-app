@@ -7,9 +7,12 @@ from typing import Any
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "{{ cookiecutter.friendly_name }}"
-copyright = "{{ cookiecutter.copyright_year }}, {{ cookiecutter.author }}"
 author = "{{ cookiecutter.author }}"
-release = metadata.version("{{ cookiecutter.package_name }}")
+copyright = f"{{ cookiecutter.copyright_year }}, {author}"  # noqa: A001
+
+# The full version, including alpha/beta/rc tags.
+release = metadata.version("{{ cookiecutter.app_name }}")
+# The short X.Y version.
 version = release.rsplit(".", 1)[0]
 
 # -- General configuration ---------------------------------------------------
@@ -18,7 +21,6 @@ version = release.rsplit(".", 1)[0]
 extensions = [
     "myst_parser",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autodoc.typehints",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
@@ -38,6 +40,10 @@ intersphinx_mapping = {
 }
 
 # move type hints into the description block, instead of the signature
+autodoc_member_order = "bysource"
+autodoc_default_options = {
+    "show-inheritance": True,
+}
 autodoc_typehints = "description"
 autodoc_typehints_description_target = "documented"
 

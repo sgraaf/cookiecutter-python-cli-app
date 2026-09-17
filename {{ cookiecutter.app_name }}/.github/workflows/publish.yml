@@ -1,26 +1,49 @@
-{% raw -%}
-name: Publish Python Package
+name: "Publish"
 
 on:
-  release:
-    types:
-      - published
+  push:
+    tags:
+      # Publish on any tag starting with the format "YYYY.N.N"
+      - "[0-9][0-9][0-9][0-9].[0-9]+.[0-9]+*"
 
 jobs:
+  # never publish a release that fails linting, type checking or tests
+  ci:
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  test:
+    uses: ./.github/workflows/test.yml
+    permissions:
+      contents: read
+
   publish:
+    needs: [ci, test]
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
 
-      - name: Install the latest version of uv with caching enabled
-        id: setup-uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
 
-      - name: Run nox "release-to-pypi" session
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: uvx nox --session release-to-pypi
-{% endraw -%}
+      - name: Install Python 3.{{ [cookiecutter.min_python_version.split('.')[1] | int, 13] | max }}
+        run: uv python install 3.{{ [cookiecutter.min_python_version.split('.')[1] | int, 13] | max }}
+
+      - name: Build
+        run: uv build
+
+      # Check that basic features work and we didn't miss to include crucial files
+      - name: Smoke test (wheel)
+        run: uv run --isolated --no-project --with dist/*.whl --with pytest pytest -c /dev/null tests/smoke_test.py
+      - name: Smoke test (source distribution)
+        run: uv run --isolated --no-project --with dist/*.tar.gz --with pytest pytest -c /dev/null tests/smoke_test.py
+
+      - name: Publish
+        run: uv publish

@@ -1,16 +1,8 @@
-ci:
-  autofix_commit_msg: |
-    :art: [pre-commit.ci] auto fixes from pre-commit.com hooks
-
-    for more information, see https://pre-commit.ci
-  autoupdate_schedule: quarterly
-  autoupdate_commit_msg: ":arrow_up: [pre-commit.ci] pre-commit autoupdate"
-
-exclude: "^{{ cookiecutter\\.app_name }}/"
+exclude: "^{{ cookiecutter.app_name }}/"
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-json
@@ -18,13 +10,18 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: "0.26"
+    hooks:
+      - id: validate-pyproject
+        additional_dependencies: ["validate-pyproject-schema-store[all]"]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.2
+    rev: 0.38.0
     hooks:
       - id: check-dependabot
       - id: check-github-workflows
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.12.3
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.8
     hooks:
       - id: ruff-check
         args:
@@ -32,7 +29,16 @@ repos:
           - --unsafe-fixes
           - --show-fixes
       - id: ruff-format
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+      - id: codespell
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+      - id: mdformat
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.6.2
+    rev: v3.9.7
     hooks:
       - id: prettier
+        types: [yaml]

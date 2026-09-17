@@ -10,13 +10,21 @@
     "version": "{% now 'utc', '%Y' %}.1.0",
     "copyright_year": "{% now 'utc', '%Y' %}",
     "license": [
-        "mit",
-        "gpl-3.0",
-        "apache-2.0",
-        "gpl-2.0",
-        "bsd-3-clause",
-        "agpl-3.0",
-        "unlicense"
+        "MIT",
+        "Apache-2.0",
+        "GPL-3.0-only",
+        "AGPL-3.0-only",
+        "BSD-3-Clause",
+        "GPL-3.0-or-later",
+        "LGPL-3.0-only",
+        "AGPL-3.0-or-later",
+        "GPL-2.0-only",
+        "BSD-2-Clause",
+        "MPL-2.0",
+        "LGPL-3.0-or-later",
+        "GPL-2.0-or-later",
+        "ISC",
+        "Unlicense"
     ],
     "development_status": [
         "Development Status :: 1 - Planning",
@@ -27,28 +35,42 @@
         "Development Status :: 6 - Mature",
         "Development Status :: 7 - Inactive"
     ],
+    "min_python_version": [
+        "3.10",
+        "3.11",
+        "3.12",
+        "3.13",
+        "3.14"
+    ],
     "init_git": [true, false],
-    "init_venv": [true, false],
     "__prompts__": {
         "friendly_name": "The friendly name of your app (for use in documentation, etc.)",
         "app_name": "The name (slug) of your app",
         "package_name": "The name of your package",
-        "short_description": "A short description of your projec",
-        "use_rich": "Use [link=https://github.com/Textualize/rich]Rich[/link] for rich text and beautiful formatting in the terminal",
+        "short_description": "A short description of your app",
+        "use_rich": "Use [link=https://github.com/ewels/rich-click]rich-click[/link] for rich text and beautiful formatting in the terminal",
         "author": "Your (full) name",
-        "email": "Your e-mail address",
+        "email": "Your email address",
         "github_username": "Your GitHub username or organization",
         "version": "The version of your package",
         "copyright_year": "The copyright year of your package",
         "license": {
             "__prompt__": "Choose a license for your package",
-            "mit": "MIT",
-            "gpl-3.0": "GNU General Public License v3.0",
-            "apache-2.0": "Apache license 2.0",
-            "gpl-2.0": "GNU General Public License v2.0",
-            "bsd-3-clause": "BSD 3-clause \"New\" or \"Revised\" license",
-            "agpl-3.0": "GNU Affero General Public License v3.0",
-            "unlicense": "The Unlicense"
+            "MIT": "MIT License",
+            "Apache-2.0": "Apache License 2.0",
+            "GPL-3.0-only": "GNU General Public License v3.0 only",
+            "AGPL-3.0-only": "GNU Affero General Public License v3.0 only",
+            "BSD-3-Clause": "BSD 3-Clause \"New\" or \"Revised\" License",
+            "GPL-3.0-or-later": "GNU General Public License v3.0 or later",
+            "LGPL-3.0-only": "GNU Lesser General Public License v3.0 only",
+            "AGPL-3.0-or-later": "GNU Affero General Public License v3.0 or later",
+            "GPL-2.0-only": "GNU General Public License v2.0 only",
+            "BSD-2-Clause": "BSD 2-Clause \"Simplified\" License",
+            "MPL-2.0": "Mozilla Public License 2.0",
+            "LGPL-3.0-or-later": "GNU Lesser General Public License v3.0 or later",
+            "GPL-2.0-or-later": "GNU General Public License v2.0 or later",
+            "ISC": "ISC License",
+            "Unlicense": "The Unlicense"
         },
         "development_status": {
             "__prompt__": "Choose a development status for your package",
@@ -60,7 +82,14 @@
             "Development Status :: 6 - Mature": "Mature",
             "Development Status :: 7 - Inactive": "Inactive"
         },
-        "init_venv": "Initialize a virtual environment (venv)",
+        "min_python_version": {
+            "__prompt__": "Choose the minimum Python version for your package",
+            "3.10": "Python 3.10",
+            "3.11": "Python 3.11",
+            "3.12": "Python 3.12",
+            "3.13": "Python 3.13",
+            "3.14": "Python 3.14"
+        },
         "init_git": "Initialize a Git repository"
     }
 }

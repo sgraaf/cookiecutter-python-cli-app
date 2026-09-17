@@ -1,19 +1,15 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
-
-ci:
-  autofix_commit_msg: |
-    :art: [pre-commit.ci] auto fixes from pre-commit.com hooks
-
-    for more information, see https://pre-commit.ci
-  autoupdate_schedule: quarterly
-  autoupdate_commit_msg: ":arrow_up: [pre-commit.ci] pre-commit autoupdate"
-
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+  # `cog` runs first so that the hooks below get to format and tidy up its output
+  - repo: local
     hooks:
-      - id: check-added-large-files
+      - id: cog
+        name: cog
+        entry: uv run cog -r
+        language: system
+        files: ^(README\.md|docs/cli\.md)$
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
       - id: check-json
       - id: check-toml
       - id: check-xml
@@ -21,17 +17,18 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.24.1
+    rev: "0.26"
     hooks:
       - id: validate-pyproject
+        additional_dependencies: ["validate-pyproject-schema-store[all]"]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.2
+    rev: 0.38.0
     hooks:
       - id: check-dependabot
       - id: check-github-workflows
       - id: check-readthedocs
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.12.3
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.8
     hooks:
       - id: ruff-check
         args:
@@ -39,15 +36,58 @@ repos:
           - --unsafe-fixes
           - --show-fixes
       - id: ruff-format
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.16.1
+  - repo: local
+    hooks:
+      - id: ty-check
+        name: ty check
+        entry: uv run ty check
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+        require_serial: true
+  - repo: https://github.com/facebook/pyrefly-pre-commit
+    rev: 1.3.1
+    hooks:
+      - id: pyrefly-check
+        name: pyrefly check (tests)
+        entry: uv run pyrefly check
+        language: system
+  - repo: local
     hooks:
       - id: mypy
+        name: mypy (tests)
+        entry: uv run mypy
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+        require_serial: true
+      - id: pyright
+        name: pyright (tests)
+        entry: uv run pyright
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+        require_serial: true
+      - id: zuban-check
+        name: zuban check (tests)
+        entry: uv run zuban check
+        language: system
+        types_or: [python, pyi]
+        pass_filenames: false
+        require_serial: true
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.3
     hooks:
       - id: codespell
+  - repo: https://github.com/hukkin/mdformat
+    rev: 1.0.0
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-myst
+          - mdformat-ruff
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.6.2
+    rev: v3.9.7
     hooks:
       - id: prettier
+        types: [yaml]

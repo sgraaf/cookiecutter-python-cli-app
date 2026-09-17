@@ -8,10 +8,11 @@ Running `{{ cookiecutter.app_name }} --help` or `python -m {{ cookiecutter.packa
 
 <!-- [[[cog
 import cog
-from {{ cookiecutter.package_name }} import cli
 from click.testing import CliRunner
+from {{ cookiecutter.package_name }} import cli
 result = CliRunner().invoke(cli.cli, ["--help"], terminal_width=88)
-help = result.output.replace("Usage: cli", "Usage: {{ cookiecutter.app_name }}")
-cog.outl(f"\n```sh\n{{ cookiecutter.app_name }} --help\n{help.rstrip()}\n```\n")
+output = result.output.replace("Usage: cli", "Usage: {{ cookiecutter.app_name }}")
+help_text = "\n".join(line.rstrip() for line in output.splitlines()).rstrip()
+cog.outl(f"\n```shell\n{{ cookiecutter.app_name }} --help\n{help_text}\n```\n")
 ]]] -->
 <!-- [[[end]]] -->

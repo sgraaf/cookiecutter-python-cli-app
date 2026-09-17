@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv-build"]
+requires = ["uv_build>=0.12.13,<0.13"]
 build-backend = "uv_build"
 
 [project]
@@ -8,59 +8,54 @@ version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.short_description }}"
 authors = [{name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}"}]
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "{{ cookiecutter.license }}"
+license-files = ["LICENSE"]
 keywords = []
 classifiers = [
     "{{ cookiecutter.development_status }}",
     "Environment :: Console",
     "Intended Audience :: Developers",
-    {% if cookiecutter.license == 'mit' -%}
-    "License :: OSI Approved :: MIT License",
-    {% elif cookiecutter.license == 'gpl-3.0' -%}
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-    {% elif cookiecutter.license == 'apache-2.0' -%}
-    "License :: OSI Approved :: Apache Software License",
-    {% elif cookiecutter.license == 'gpl-2.0' -%}
-    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
-    {% elif cookiecutter.license == 'bsd-3-clause' -%}
-    "License :: OSI Approved :: BSD License",
-    {% elif cookiecutter.license == 'agpl-3.0' -%}
-    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
-    {% elif cookiecutter.license == 'unlicense' -%}
-    "License :: OSI Approved :: The Unlicense (Unlicense)",
-    {% endif -%}
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3 :: Only",
+    {% for minor in range(cookiecutter.min_python_version.split('.')[1] | int, 15) -%}
+    "Programming Language :: Python :: 3.{{ minor }}",
+    {% endfor -%}
     "Typing :: Typed",
 ]
-requires-python = "~=3.9"
+requires-python = ">={{ cookiecutter.min_python_version }}, <4"
 dependencies = [
     "click",
 {%- if cookiecutter.use_rich %}
-    "rich_click",
+    "rich-click",
 {%- endif %}
 ]
 
 [dependency-groups]
-tests = [
-    "pytest",
-]
 docs = [
     "furo",
     "myst-parser",
     "sphinx",
+    "sphinx-autobuild",
     "sphinx-copybutton",
     "sphinxext-opengraph",
 ]
+tests = [
+    "pytest",
+    "pytest-cov",
+]
+typing = [
+    "mypy",
+    "pyrefly",
+    "pyright[nodejs]",
+    "ty",
+    "zuban",
+]
 dev = [
-    { include-group = "tests" },
     { include-group = "docs" },
+    { include-group = "tests" },
+    { include-group = "typing" },
+    "cogapp",
+    "prek",
 ]
 
 [project.urls]
@@ -72,52 +67,65 @@ Changelog = "https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/change
 [project.scripts]
 {{ cookiecutter.app_name }} = "{{ cookiecutter.package_name }}.__main__:cli"
 
-[tool.ruff]
-lint.select = ["ALL"]
-lint.ignore = [
-    "E501",  # line too long (pycodestyle), handled by ruff-format
-    "ANN002",  # missing-type-args (flake8-annotations)
-    "ANN003",  # missing-type-kwargs (flake8-annotations)
-    "ANN401",  # any-type (flake8-annotations)
-    "COM",  # flake8-commas, handled by ruff-format
-    "CPY",  # flake8-copyright
-    "ISC001",  # single-line-implicit-string-concatenation (flake8-implicit-str-concat)
-    "INP",  # flake8-no-pep420
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",  # missing-trailing-comma (flake8-commas), handled by the formatter
+    "CPY001",  # missing-copyright-notice (flake8-copyright)
+    "D102",  # undocumented-public-method (pydocstyle)
+    "D105",  # undocumented-magic-method (pydocstyle)
+    "D107",  # undocumented-public-init (pydocstyle)
+    "E501",  # line-too-long (pycodestyle), handled by the formatter
+    "PLC2401",  # non-ascii-name (Pylint)
+    "S101",   # assert (flake8-bandit)
+    "SLF001",  # private-member-access (flake8-self)
 ]
-src = ["src", "tests", "docs"]
+pydocstyle.convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = [
     "F401",  # unused-import (Pyflakes)
 ]
-"noxfile.py" = [
-    "D100",  # undocumented-public-module (pydocstyle)
-    "ERA001",  # commented-out-code (eradicate)
-]
 "docs/conf.py" = [
-    "A001",  # builtin-variable-shadowing (flake8-builtins)
+    "INP001",  # implicit-namespace-package (flake8-no-pep420)
 ]
 "src/{{ cookiecutter.package_name }}/cli.py" = [
-    "C901",  # complex-structure (mccabe)
-    "FBT001",  # boolean-type-hint-positional-argument (flake8-boolean-trap)
     "A001",  # builtin-variable-shadowing (flake8-builtins)
     "A002",  # builtin-argument-shadowing (flake8-builtins)
+    "C901",  # complex-structure (mccabe)
+    "FBT001",  # boolean-type-hint-positional-argument (flake8-boolean-trap)
     "PLR0913",  # too-many-arguments (Pylint)
 ]
 "tests/**/test_*.py" = [
     "D",  # pydocstyle
-    "ANN201",  # missing-return-type-undocumented-public-function (flake8-annotations)
+    "PLR2004",   # magic-value-comparison (Pylint)
     "S101",   # assert (flake8-bandit)
     "SIM300",   # yoda-conditions (flake8-simplify)
+]
+"tests/smoke_test.py" = [
+    "D",  # pydocstyle
     "PLR2004",   # magic-value-comparison (Pylint)
+    "S101",  # assert (flake8-bandit)
+]
+"tests/utils.py" = [
+    "ANN401",  # any-type (flake8-annotations)
 ]
 
-[tool.ruff.lint.isort]
-known-first-party = [
-  "{{ cookiecutter.app_name }}",
-  "tests",
-]
-lines-between-types = 0
+[tool.ty.src]
+include = ["src", "tests"]
 
-[tool.ruff.lint.pydocstyle]
-convention = "google"
+[tool.mypy]
+python_version = "{{ cookiecutter.min_python_version }}"
+files = ["tests"]
+
+[tool.pyrefly]
+project-includes = ["tests"]
+search-path = ["tests"]
+
+[tool.pyright]
+include = ["tests"]
+pythonVersion = "{{ cookiecutter.min_python_version }}"
+
+[tool.zuban]
+python_version = "{{ cookiecutter.min_python_version }}"
+files = ["tests"]

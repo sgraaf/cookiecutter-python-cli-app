@@ -4,11 +4,11 @@ import subprocess
 from collections.abc import Sequence
 from dataclasses import dataclass
 from os import PathLike
-from typing import Any, Union
+from typing import Any
 
 # copied from `typeshed`
-StrOrBytesPath = Union[str, bytes, PathLike]
-Command = Union[StrOrBytesPath, Sequence[StrOrBytesPath]]
+StrOrBytesPath = str | bytes | PathLike[str] | PathLike[bytes]
+Command = StrOrBytesPath | Sequence[StrOrBytesPath]
 
 
 @dataclass

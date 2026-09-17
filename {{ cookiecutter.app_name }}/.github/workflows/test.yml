@@ -1,38 +1,44 @@
 {% raw -%}
-name: Test
+name: "Test"
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/test.yml"
-      - "**.py"
   push:
-    paths:
-      - ".github/workflows/test.yml"
-      - "**.py"
+    branches:
+      - main
+    tags:
+      # Test on any tag starting with the format "YYYY.N.N"
+      - "[0-9][0-9][0-9][0-9].[0-9]+.[0-9]+*"
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python_version:
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13"
-
+        python-version:
+{%- endraw %}
+{%- for minor in range(cookiecutter.min_python_version.split('.')[1] | int, 15) %}
+          - "3.{{ minor }}"
+{%- endfor %}
+{% raw %}
     steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
 
-      - name: Install the latest version of uv with caching enabled
-        id: setup-uv
-        uses: astral-sh/setup-uv@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
         with:
           enable-cache: true
 
-      - name: Run nox "tests" session
-        run: uvx nox --error-on-missing-interpreters --session tests-${{ matrix.python_version }}
+      - name: Install Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --group tests
+
+      - name: Run tests
+        run: uv run pytest
 {% endraw -%}

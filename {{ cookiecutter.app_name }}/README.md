@@ -4,10 +4,11 @@
 
 [![PyPI](https://img.shields.io/pypi/v/{{ cookiecutter.app_name }})](https://img.shields.io/pypi/v/{{ cookiecutter.app_name }})
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/{{ cookiecutter.app_name }})](https://pypi.org/project/{{ cookiecutter.app_name }}/)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/main.svg)](https://results.pre-commit.ci/latest/github/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/main)
+[![CI](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/actions/workflows/ci.yml)
 [![Test](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/actions/workflows/test.yml/badge.svg)](https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.app_name }}/actions/workflows/test.yml)
 [![Documentation Status](https://readthedocs.org/projects/{{ cookiecutter.app_name }}/badge/?version=latest)](https://{{ cookiecutter.app_name }}.readthedocs.io/en/latest/?badge=latest)
-[![PyPI - License](https://img.shields.io/pypi/l/{{ cookiecutter.app_name }})](https://img.shields.io/pypi/l/{{ cookiecutter.app_name }})
+
+<!-- [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/<PROJECT-NUMBER>/badge)](https://www.bestpractices.dev/projects/<PROJECT-NUMBER>) -->
 
 {{ cookiecutter.short_description }}
 
@@ -17,9 +18,9 @@
 
 <!-- start docs-include-installation -->
 
-{{ cookiecutter.friendly_name }} is available on [PyPI](https://pypi.org/project/{{ cookiecutter.app_name }}/). Install with [uv](https://docs.astral.sh/uv/) or your package manager of choice:
+*{{ cookiecutter.friendly_name }}* is available on [PyPI](https://pypi.org/project/{{ cookiecutter.app_name }}/). Install with [uv](https://docs.astral.sh/uv/) or your package manager of choice:
 
-```sh
+```shell
 uv tool install {{ cookiecutter.app_name }}
 ```
 
@@ -27,7 +28,7 @@ uv tool install {{ cookiecutter.app_name }}
 
 ## Documentation
 
-Check out the [{{ cookiecutter.friendly_name }} documentation](https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/) for the [User's Guide](https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/usage.html) and [CLI Reference](https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/cli.html).
+Check out the [*{{ cookiecutter.friendly_name }}* documentation](https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/) for the [User's Guide](https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/usage.html) and [CLI Reference](https://{{ cookiecutter.app_name }}.readthedocs.io/en/stable/cli.html).
 
 ## Usage
 
@@ -37,12 +38,12 @@ Running `{{ cookiecutter.app_name }} --help` or `python -m {{ cookiecutter.packa
 
 <!-- [[[cog
 import cog
-from {{ cookiecutter.package_name }} import cli
 from click.testing import CliRunner
-runner = CliRunner()
-result = runner.invoke(cli.cli, ["--help"], terminal_width=88)
-help = result.output.replace("Usage: cli", "Usage: {{ cookiecutter.app_name }}")
-cog.outl(f"\n```sh\n{{ cookiecutter.app_name }} --help\n{help.rstrip()}\n```\n")
+from {{ cookiecutter.package_name }} import cli
+result = CliRunner().invoke(cli.cli, ["--help"], terminal_width=88)
+output = result.output.replace("Usage: cli", "Usage: {{ cookiecutter.app_name }}")
+help_text = "\n".join(line.rstrip() for line in output.splitlines()).rstrip()
+cog.outl(f"\n```shell\n{{ cookiecutter.app_name }} --help\n{help_text}\n```\n")
 ]]] -->
 <!-- [[[end]]] -->
 
