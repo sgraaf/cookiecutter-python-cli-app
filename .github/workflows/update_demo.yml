@@ -37,6 +37,12 @@ jobs:
           cat "${{ env.TEMPLATE }}/.github/workflows/input-for-demo.txt" | uvx cookiecutter "${{ env.TEMPLATE }}"
           find "${{ env.DEMO }}"
 
+      # The demo is generated without Git initialization, so the `post_gen_project` hook does not run the pre-commit
+      # hooks (and thus `cog`). Run `cog` here, so that the CLI reference in the docs is up-to-date.
+      - name: Generate CLI reference
+        run: uv run cog -r README.md docs/cli.md
+        working-directory: ${{ env.DEMO }}
+
       - name: Commit and push changes
         run: |
           # Sync the generated files into the checkout rather than moving `.git`: `actions/checkout` persists the
