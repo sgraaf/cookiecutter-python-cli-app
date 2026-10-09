@@ -29,8 +29,8 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install Python 3.{{ [cookiecutter.min_python_version.split('.')[1] | int, 13] | max }}
-        run: uv python install 3.{{ [cookiecutter.min_python_version.split('.')[1] | int, 13] | max }}
+      - name: Install Python 3.{{ [cookiecutter.min_python_version.split('.')[1] | int, 14] | max }}
+        run: uv python install 3.{{ [cookiecutter.min_python_version.split('.')[1] | int, 14] | max }}
 
       - name: Install dependencies
         run: uv sync --dev

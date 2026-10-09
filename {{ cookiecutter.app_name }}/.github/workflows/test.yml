@@ -20,7 +20,7 @@ jobs:
       matrix:
         python-version:
 {%- endraw %}
-{%- for minor in range(cookiecutter.min_python_version.split('.')[1] | int, 15) %}
+{%- for minor in range(cookiecutter.min_python_version.split('.')[1] | int, 16) %}
           - "3.{{ minor }}"
 {%- endfor %}
 {% raw %}

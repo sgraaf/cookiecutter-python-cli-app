@@ -1,6 +1,6 @@
 # cookiecutter-python-cli-app
 
-[![Supported Python Versions](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue)](https://github.com/sgraaf/cookiecutter-python-cli-app)
+[![Supported Python Versions](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13%20%7C%203.14%20%7C%203.15-blue)](https://github.com/sgraaf/cookiecutter-python-cli-app)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![prek](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/j178/prek/master/docs/assets/badge-v0.json)](https://github.com/j178/prek)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
@@ -31,4 +31,4 @@ cookiecutter gh:sgraaf/cookiecutter-python-cli-app
 - A choice of 15 licenses, and optional Git repository initialization
 - Automated release builds and uploads to [PyPI](https://pypi.org/)
 
-This template supports Python 3.11, 3.12, 3.13 and 3.14.
+This template supports Python 3.11, 3.12, 3.13, 3.14 and 3.15.
